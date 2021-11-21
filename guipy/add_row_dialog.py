@@ -26,6 +26,7 @@ class add_row_dialog(object):
         add_row_dialog.setMinimumSize(QtCore.QSize(325, 500))
         add_row_dialog.setMaximumSize(QtCore.QSize(325, 500))
         font = QtGui.QFont()
+        font.setFamily("Roboto")
         font.setPointSize(12)
         add_row_dialog.setFont(font)
         self.verticalLayout = QtWidgets.QVBoxLayout(add_row_dialog)

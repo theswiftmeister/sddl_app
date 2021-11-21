@@ -1,7 +1,6 @@
 from PyQt5.QtWidgets import QApplication
 from scripts.MainWindow import MainWindow
 
-
 # Main executable file.
 
 if __name__ == "__main__":

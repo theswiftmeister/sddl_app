@@ -26,6 +26,7 @@ class warning_dialog(object):
         WarningDialogBox.setMinimumSize(QtCore.QSize(400, 110))
         WarningDialogBox.setMaximumSize(QtCore.QSize(400, 110))
         font = QtGui.QFont()
+        font.setFamily("Roboto")
         font.setPointSize(12)
         WarningDialogBox.setFont(font)
         self.verticalLayout = QtWidgets.QVBoxLayout(WarningDialogBox)

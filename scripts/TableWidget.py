@@ -3,9 +3,10 @@ from guipy.table_widget import table_widget
 
 
 class TableWidget(QWidget, table_widget):
-    def __init__(self) -> None:
+    def __init__(self, mainwindow) -> None:
         super().__init__()
         self.setupUi(self)
+        self.main = mainwindow
 
     def set_table(self):
         self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)

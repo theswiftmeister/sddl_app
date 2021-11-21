@@ -30,6 +30,7 @@ class item_search_dialog(object):
         self.verticalLayout.setObjectName("verticalLayout")
         self.tableWidget = QtWidgets.QTableWidget(item_search_dialog)
         font = QtGui.QFont()
+        font.setFamily("Roboto")
         font.setPointSize(12)
         self.tableWidget.setFont(font)
         self.tableWidget.setVerticalScrollBarPolicy(

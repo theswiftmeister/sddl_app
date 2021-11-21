@@ -19,13 +19,14 @@ class MainWindow(object):
         font.setPointSize(12)
         MainWindow.setFont(font)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../images/db.png"),
+        icon.addPixmap(QtGui.QPixmap("./images/db.png"),
                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet("")
         MainWindow.setIconSize(QtCore.QSize(30, 30))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         font = QtGui.QFont()
+        font.setFamily("Roboto")
         font.setPointSize(12)
         self.centralwidget.setFont(font)
         self.centralwidget.setObjectName("centralwidget")
@@ -65,12 +66,12 @@ class MainWindow(object):
         self.btn_add_tab.setMaximumSize(QtCore.QSize(40, 40))
         font = QtGui.QFont()
         font.setPointSize(10)
-        font.setBold(True)
+        font.setBold(False)
         font.setWeight(75)
         self.btn_add_tab.setFont(font)
         self.btn_add_tab.setText("")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("../images/add_tab.png"),
+        icon1.addPixmap(QtGui.QPixmap("./images/add_tab.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_add_tab.setIcon(icon1)
         self.btn_add_tab.setIconSize(QtCore.QSize(36, 36))
@@ -94,7 +95,7 @@ class MainWindow(object):
         self.btn_remove_tab.setFont(font)
         self.btn_remove_tab.setText("")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("../images/remove_tab.png"),
+        icon2.addPixmap(QtGui.QPixmap("./images/remove_tab.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_remove_tab.setIcon(icon2)
         self.btn_remove_tab.setIconSize(QtCore.QSize(36, 36))
@@ -125,7 +126,7 @@ class MainWindow(object):
         self.btn_add_row.setFont(font)
         self.btn_add_row.setText("")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("../images/add_row.png"),
+        icon3.addPixmap(QtGui.QPixmap("./images/add_row.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_add_row.setIcon(icon3)
         self.btn_add_row.setIconSize(QtCore.QSize(36, 36))
@@ -149,7 +150,7 @@ class MainWindow(object):
         self.btn_edit_row.setFont(font)
         self.btn_edit_row.setText("")
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("../images/edit_row.png"),
+        icon4.addPixmap(QtGui.QPixmap("./images/edit_row.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_edit_row.setIcon(icon4)
         self.btn_edit_row.setIconSize(QtCore.QSize(36, 36))
@@ -173,7 +174,7 @@ class MainWindow(object):
         self.btn_remove_row.setFont(font)
         self.btn_remove_row.setText("")
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("../images/remove_row.png"),
+        icon5.addPixmap(QtGui.QPixmap("./images/remove_row.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_remove_row.setIcon(icon5)
         self.btn_remove_row.setIconSize(QtCore.QSize(36, 36))
@@ -223,7 +224,7 @@ class MainWindow(object):
         self.btn_search_item.setFont(font)
         self.btn_search_item.setText("")
         icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap("../images/search.png"),
+        icon6.addPixmap(QtGui.QPixmap("./images/search.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_search_item.setIcon(icon6)
         self.btn_search_item.setIconSize(QtCore.QSize(32, 32))
@@ -238,8 +239,8 @@ class MainWindow(object):
         self.horizontalLayout_3.setSpacing(0)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.fontComboBox = QtWidgets.QFontComboBox(self.frame)
-        self.fontComboBox.setMinimumSize(QtCore.QSize(100, 0))
-        self.fontComboBox.setMaximumSize(QtCore.QSize(100, 16777215))
+        self.fontComboBox.setMinimumSize(QtCore.QSize(120, 0))
+        self.fontComboBox.setMaximumSize(QtCore.QSize(120, 16777215))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.fontComboBox.setFont(font)
@@ -263,7 +264,8 @@ class MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(12)
         self.spinBox.setFont(font)
-        self.spinBox.setMaximum(30)
+        self.spinBox.setMinimum(10)
+        self.spinBox.setMaximum(20)
         self.spinBox.setProperty("value", 12)
         self.spinBox.setObjectName("spinBox")
         self.horizontalLayout_3.addWidget(self.spinBox)
@@ -325,22 +327,22 @@ class MainWindow(object):
         self.label.setFont(font)
         self.label.setObjectName("label")
         self.horizontalLayout_2.addWidget(self.label)
-        self.label_2 = QtWidgets.QLabel(self.frame_3)
+        self.total_cost_label = QtWidgets.QLabel(self.frame_3)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.label_2.sizePolicy().hasHeightForWidth())
-        self.label_2.setSizePolicy(sizePolicy)
+            self.total_cost_label.sizePolicy().hasHeightForWidth())
+        self.total_cost_label.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
-        self.label_2.setFont(font)
-        self.label_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.label_2.setObjectName("label_2")
-        self.horizontalLayout_2.addWidget(self.label_2)
+        self.total_cost_label.setFont(font)
+        self.total_cost_label.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.total_cost_label.setObjectName("total_cost_label")
+        self.horizontalLayout_2.addWidget(self.total_cost_label)
         self.verticalLayout.addWidget(self.frame_3)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -365,7 +367,7 @@ class MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         self.actionNew_Project = QtWidgets.QAction(MainWindow)
         icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap("../images/new_file.png"),
+        icon7.addPixmap(QtGui.QPixmap("./images/new_file.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionNew_Project.setIcon(icon7)
         font = QtGui.QFont()
@@ -378,7 +380,7 @@ class MainWindow(object):
         self.actionNew_Project.setObjectName("actionNew_Project")
         self.actionLoad_Project = QtWidgets.QAction(MainWindow)
         icon8 = QtGui.QIcon()
-        icon8.addPixmap(QtGui.QPixmap("../images/open_file.png"),
+        icon8.addPixmap(QtGui.QPixmap("./images/open_file.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionLoad_Project.setIcon(icon8)
         font = QtGui.QFont()
@@ -389,7 +391,7 @@ class MainWindow(object):
         self.actionLoad_Project.setObjectName("actionLoad_Project")
         self.actionSave_Project = QtWidgets.QAction(MainWindow)
         icon9 = QtGui.QIcon()
-        icon9.addPixmap(QtGui.QPixmap("../images/save.png"),
+        icon9.addPixmap(QtGui.QPixmap("./images/save.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionSave_Project.setIcon(icon9)
         font = QtGui.QFont()
@@ -400,7 +402,7 @@ class MainWindow(object):
         self.actionSave_Project.setObjectName("actionSave_Project")
         self.actionSave_As = QtWidgets.QAction(MainWindow)
         icon10 = QtGui.QIcon()
-        icon10.addPixmap(QtGui.QPixmap("../images/save_as.png"),
+        icon10.addPixmap(QtGui.QPixmap("./images/save_as.png"),
                          QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionSave_As.setIcon(icon10)
         font = QtGui.QFont()
@@ -410,7 +412,7 @@ class MainWindow(object):
         self.actionSave_As.setObjectName("actionSave_As")
         self.actionQuit = QtWidgets.QAction(MainWindow)
         icon11 = QtGui.QIcon()
-        icon11.addPixmap(QtGui.QPixmap("../images/quit.png"),
+        icon11.addPixmap(QtGui.QPixmap("./images/quit.png"),
                          QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionQuit.setIcon(icon11)
         font = QtGui.QFont()
@@ -432,8 +434,9 @@ class MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "SDDL DB"))
-        self.label.setText(_translate("MainWindow", "Project Total : "))
-        self.label_2.setText(_translate("MainWindow", "0"))
+        self.label.setText(_translate(
+            "MainWindow", "Project total cost :  : "))
+        self.total_cost_label.setText(_translate("MainWindow", "0"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.actionNew_Project.setText(_translate("MainWindow", "New Project"))
         self.actionNew_Project.setStatusTip(

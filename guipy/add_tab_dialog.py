@@ -26,6 +26,7 @@ class add_tab_dialog(object):
         add_tab_dialog.setMinimumSize(QtCore.QSize(400, 100))
         add_tab_dialog.setMaximumSize(QtCore.QSize(400, 100))
         font = QtGui.QFont()
+        font.setFamily("Roboto")
         font.setPointSize(12)
         add_tab_dialog.setFont(font)
         self.verticalLayout = QtWidgets.QVBoxLayout(add_tab_dialog)

@@ -16,6 +16,7 @@ class table_widget(object):
         tab_table.setObjectName("tab_table")
         tab_table.resize(604, 493)
         font = QtGui.QFont()
+        font.setFamily("Roboto")
         font.setPointSize(12)
         font.setBold(True)
         font.setWeight(75)

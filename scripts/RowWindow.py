@@ -1,5 +1,5 @@
 
-from PyQt5 import QtCore
+from PyQt5 import QtCore, QtGui
 from PyQt5.QtWidgets import QComboBox, QDialog
 from guipy.add_row_dialog import add_row_dialog
 
@@ -13,9 +13,6 @@ class RowWindow(QDialog, add_row_dialog):
         self.input_item_quantity.editingFinished.connect(self.calculate)
         self.input_item_rate.editingFinished.connect(self.calculate)
 
-        self.btn_ok.clicked.connect(lambda: mainwindow.add_to_table(
-            self.select_tab_dropbox.currentIndex(), self.column_texts()))
-
     def closeEvent(self, e) -> None:
         return super().closeEvent(e)
 
@@ -24,7 +21,10 @@ class RowWindow(QDialog, add_row_dialog):
         dropbox.setCurrentIndex(-1)
 
     def remove_dropbox_item(self, dropbox: QComboBox, index: int):
-        dropbox.removeItem(index)
+        dropbox.removeItem(index-1)
+
+    def get_dropbox_current_index(self, dropbox: QComboBox):
+        return dropbox.currentIndex()
 
     def clear_dropbox_items(self):
         self.select_tab_dropbox.clear()
@@ -43,12 +43,13 @@ class RowWindow(QDialog, add_row_dialog):
     def column_texts(self):
         columns = [self.dateEdit, self.input_item_name, self.input_unit,
                    self.input_item_quantity, self.input_item_rate, self.total_cost_label]
-        return [i.text() for i in columns]
+        return [i.text() for i in columns][:]
 
-    def column_fields(self):
+    def set_column_field_texts(self, list):
         columns = [self.input_item_name, self.input_unit,
                    self.input_item_quantity, self.input_item_rate, self.total_cost_label]
-        return columns
+        for i in range(len(columns)):
+            columns[i].setText(list[i])
 
     def get_name_value_dict(self):
         name = self.input_item_name.text()
@@ -58,3 +59,9 @@ class RowWindow(QDialog, add_row_dialog):
     def set_dropbox(self, dropbox: QComboBox, visibility: bool, index: int):
         dropbox.setCurrentIndex(index)
         dropbox.setEnabled(visibility)
+
+    def set_window_icon(self, path):
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(path),
+                       QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.setWindowIcon(icon)

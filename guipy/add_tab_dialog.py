@@ -25,6 +25,10 @@ class add_tab_dialog(object):
         add_tab_dialog.setSizePolicy(sizePolicy)
         add_tab_dialog.setMinimumSize(QtCore.QSize(400, 100))
         add_tab_dialog.setMaximumSize(QtCore.QSize(400, 100))
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("./images/add_tab.png"),
+                       QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        add_tab_dialog.setWindowIcon(icon)
         font = QtGui.QFont()
         font.setFamily("Roboto")
         font.setPointSize(12)

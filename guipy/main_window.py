@@ -243,6 +243,7 @@ class MainWindow(object):
         self.fontComboBox.setMaximumSize(QtCore.QSize(120, 16777215))
         font = QtGui.QFont()
         font.setPointSize(12)
+        font.setFamily("Roboto")
         self.fontComboBox.setFont(font)
         font = QtGui.QFont()
         font.setFamily("Arial")
@@ -263,6 +264,7 @@ class MainWindow(object):
         self.spinBox.setMaximumSize(QtCore.QSize(50, 16777215))
         font = QtGui.QFont()
         font.setPointSize(12)
+        font.setFamily("Roboto")
         self.spinBox.setFont(font)
         self.spinBox.setMinimum(10)
         self.spinBox.setMaximum(20)
@@ -428,7 +430,12 @@ class MainWindow(object):
         self.menubar.addAction(self.menuFile.menuAction())
 
         self.retranslateUi(MainWindow)
+
         self.dropdown.setCurrentIndex(-1)
+        self.menu_clickables = [self.actionSave_As, self.actionSave_Project, self.btn_add_row,
+                                self.btn_add_tab, self.btn_edit_row, self.btn_remove_row, self.btn_remove_tab, self.btn_search_item, self.fontComboBox, self.spinBox]
+        for i in self.menu_clickables:
+            i.setEnabled(False)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -450,7 +457,7 @@ class MainWindow(object):
         self.actionLoad_Project.setShortcut(
             _translate("MainWindow", "Ctrl+Alt+L"))
         self.actionSave_Project.setText(
-            _translate("MainWindow", "Save Project"))
+            _translate("MainWindow", "Save"))
         self.actionSave_Project.setStatusTip(
             _translate("MainWindow", "Save file"))
         self.actionSave_Project.setShortcut(_translate("MainWindow", "Ctrl+S"))

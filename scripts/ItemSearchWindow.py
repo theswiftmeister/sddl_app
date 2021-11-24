@@ -38,9 +38,9 @@ class ItemSearchWindow(QDialog, item_search_dialog):
     def get_table_total_cost(self):
         table = self.tableWidget
         column = 3
-        total_table_cost = sum([float(table.item(i, column).text()) for i in range(table
-                                                                                   .rowCount())])
-        self.label_total_cost.setText(str(total_table_cost))
+        total_table_cost = format(sum([float(table.item(i, column).text()) for i in range(table
+                                                                                          .rowCount())]), ".2f")
+        self.label_total_cost.setText(total_table_cost)
 
     def set_table_font(self, font_family, font_size):
         font = self.tableWidget.font()

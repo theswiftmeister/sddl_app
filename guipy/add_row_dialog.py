@@ -57,6 +57,11 @@ class add_row_dialog(object):
         self.tab_label.setObjectName("tab_label")
         self.horizontalLayout_5.addWidget(self.tab_label)
         self.select_tab_dropbox = QtWidgets.QComboBox(self.frame_4)
+        self.select_tab_dropbox.setEditable(True)
+        self.select_tab_dropbox.lineEdit().setReadOnly(True)
+        self.select_tab_dropbox.lineEdit().setDisabled(True)
+        self.select_tab_dropbox.lineEdit().setAlignment(
+            QtCore.Qt.AlignmentFlag.AlignCenter)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -68,7 +73,6 @@ class add_row_dialog(object):
         self.select_tab_dropbox.setMaximumSize(QtCore.QSize(150, 16777215))
         font = QtGui.QFont()
         font.setPointSize(12)
-
         font.setWeight(75)
         self.select_tab_dropbox.setFont(font)
         self.select_tab_dropbox.setObjectName("select_tab_dropbox")

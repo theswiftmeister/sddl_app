@@ -9,7 +9,6 @@ class TabWindow(QDialog, add_tab_dialog):
         self.setupUi(self)
         self.button_ok.clicked.connect(
             lambda: mainwindow.add_tab(self.get_tab_name_text()))
-        self.button_ok.clicked.connect(self.close)
 
     def closeEvent(self, e) -> None:
         self.input_tab_name.setText("")

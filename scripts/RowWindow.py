@@ -13,22 +13,21 @@ class RowWindow(QDialog, add_row_dialog):
         self.input_item_quantity.editingFinished.connect(self.calculate)
         self.input_item_rate.editingFinished.connect(self.calculate)
 
+        self.btn_reset.clicked.connect(lambda: self.set_column_field_texts(
+            ["", "", "", "", ""]))
+
+        self.select_item_dropbox.textActivated.connect(
+            lambda e: self.set_name_value_fields(name=e, tab_index=self.get_dropbox_current_index(self.select_tab_dropbox), list=mainwindow.get_name_value_dict()))
+
     def closeEvent(self, e) -> None:
         return super().closeEvent(e)
-
-    def add_dropbox_items(self, dropbox: QComboBox, item: str):
-        dropbox.addItem(item)
-        dropbox.setCurrentIndex(-1)
-
-    def remove_dropbox_item(self, dropbox: QComboBox, index: int):
-        dropbox.removeItem(index-1)
 
     def get_dropbox_current_index(self, dropbox: QComboBox):
         return dropbox.currentIndex()
 
-    def clear_dropbox_items(self):
-        self.select_tab_dropbox.clear()
-        self.select_item_dropbox.clear()
+    def set_dropbox_current_index(self, dropbox: QComboBox, list: list):
+        dropbox.clear()
+        dropbox.addItems(list)
 
     def calculate(self):
         try:
@@ -36,7 +35,8 @@ class RowWindow(QDialog, add_row_dialog):
                            else self.input_item_quantity.text())
             rate = float(0 if not self.input_item_rate.text()
                          else self.input_item_rate.text())
-            self.total_cost_label.setText(str(quantity*rate))
+
+            self.total_cost_label.setText(format(quantity*rate, ".2f"))
         except:
             pass
 
@@ -51,14 +51,24 @@ class RowWindow(QDialog, add_row_dialog):
         for i in range(len(columns)):
             columns[i].setText(list[i])
 
+    def get_column_field_texts(self):
+        columns = [self.input_item_name, self.input_unit,
+                   self.input_item_quantity, self.input_item_rate]
+        return columns
+
+    def set_name_value_fields(self, name, tab_index, list):
+        self.input_item_name.setText(name)
+        self.input_unit.setText(
+            list[tab_index][name])
+
     def get_name_value_dict(self):
         name = self.input_item_name.text()
         value = self.input_unit.text()
         return name, value
 
-    def set_dropbox(self, dropbox: QComboBox, visibility: bool, index: int):
+    def set_dropbox(self, dropbox: QComboBox, isEnabled: bool, index: int):
         dropbox.setCurrentIndex(index)
-        dropbox.setEnabled(visibility)
+        dropbox.setEnabled(isEnabled)
 
     def set_window_icon(self, path):
         icon = QtGui.QIcon()

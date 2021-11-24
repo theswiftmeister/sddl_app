@@ -15,6 +15,10 @@ class item_search_dialog(object):
     def setupUi(self, item_search_dialog):
         item_search_dialog.setObjectName("item_search_dialog")
         item_search_dialog.resize(400, 600)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("./images/db.png"),
+                       QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        item_search_dialog.setWindowIcon(icon)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)

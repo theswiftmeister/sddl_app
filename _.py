@@ -1,3 +1,11 @@
+from PyQt5.QtCore import endl
 
-for col_id, col in enumerate([0, 3, 4, 5, ]):
-    print(col)
+
+l = [["s", "a", "d"], ["3", "4", "5"], ["s", "a", "d"]]
+
+
+def add(a, c, d):
+    return a, c, d
+
+
+print([print(*i, end="\n") for i in l], end="\n")

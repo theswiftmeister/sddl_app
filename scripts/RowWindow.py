@@ -16,6 +16,8 @@ class RowWindow(QDialog, add_row_dialog):
         self.btn_reset.clicked.connect(lambda: self.set_column_field_texts(
             ["", "", "", "", ""]))
 
+        self.select_tab_dropbox.textActivated.connect(lambda e: self.set_dropbox_current_index(
+            self.select_item_dropbox, [k for k, v in mainwindow.get_name_value_dict()[self.get_dropbox_current_index(self.select_tab_dropbox)].items()]))
         self.select_item_dropbox.textActivated.connect(
             lambda e: self.set_name_value_fields(name=e, tab_index=self.get_dropbox_current_index(self.select_tab_dropbox), list=mainwindow.get_name_value_dict()))
 

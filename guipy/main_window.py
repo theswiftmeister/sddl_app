@@ -412,11 +412,21 @@ class MainWindow(object):
         self.actionSave_As.setFont(font)
         self.actionSave_As.setShortcutContext(QtCore.Qt.ApplicationShortcut)
         self.actionSave_As.setObjectName("actionSave_As")
-        self.actionQuit = QtWidgets.QAction(MainWindow)
+        self.print_file = QtWidgets.QAction(MainWindow)
         icon11 = QtGui.QIcon()
-        icon11.addPixmap(QtGui.QPixmap("./images/quit.png"),
+        icon11.addPixmap(QtGui.QPixmap("./images/print.png"),
                          QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.actionQuit.setIcon(icon11)
+        self.print_file.setIcon(icon11)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.print_file.setFont(font)
+        self.print_file.setShortcutContext(QtCore.Qt.ApplicationShortcut)
+        self.print_file.setObjectName("print_file")
+        self.actionQuit = QtWidgets.QAction(MainWindow)
+        icon12 = QtGui.QIcon()
+        icon12.addPixmap(QtGui.QPixmap("./images/quit.png"),
+                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.actionQuit.setIcon(icon12)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.actionQuit.setFont(font)
@@ -425,6 +435,7 @@ class MainWindow(object):
         self.menuFile.addAction(self.actionLoad_Project)
         self.menuFile.addAction(self.actionSave_Project)
         self.menuFile.addAction(self.actionSave_As)
+        self.menuFile.addAction(self.print_file)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionQuit)
         self.menubar.addAction(self.menuFile.menuAction())
@@ -433,7 +444,7 @@ class MainWindow(object):
 
         self.dropdown.setCurrentIndex(-1)
         self.menu_clickables = [self.actionSave_As, self.actionSave_Project, self.btn_add_row,
-                                self.btn_add_tab, self.btn_edit_row, self.btn_remove_row, self.btn_remove_tab, self.btn_search_item, self.fontComboBox, self.spinBox]
+                                self.btn_add_tab, self.btn_edit_row, self.btn_remove_row, self.btn_remove_tab, self.btn_search_item, self.fontComboBox, self.spinBox, self.print_file]
         for i in self.menu_clickables:
             i.setEnabled(False)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -465,6 +476,10 @@ class MainWindow(object):
         self.actionSave_As.setStatusTip(
             _translate("MainWindow", "Save file as new"))
         self.actionSave_As.setShortcut(_translate("MainWindow", "Ctrl+Alt+S"))
+        self.print_file.setText(_translate("MainWindow", "Print"))
+        self.print_file.setStatusTip(
+            _translate("MainWindow", "Print current table"))
+        self.print_file.setShortcut(_translate("MainWindow", "Ctrl+P"))
         self.actionQuit.setText(_translate("MainWindow", "Quit"))
         self.actionQuit.setStatusTip(
             _translate("MainWindow", "Closes the app"))

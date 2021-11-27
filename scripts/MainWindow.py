@@ -1,4 +1,5 @@
 from PyQt5 import QtCore, QtGui
+from PyQt5.QtPrintSupport import QPrintPreviewDialog, QPrinter, QPrintDialog
 from PyQt5.QtWidgets import QFileDialog, QMainWindow, QTableWidgetItem
 from guipy.main_window import MainWindow
 from scripts.TabWindow import TabWindow
@@ -11,9 +12,9 @@ from collections import ChainMap
 
 
 DIR = "./"
-FILE_TYPE = ".json"
-TAB_ITEMS_FILE_NAME = "tabItems"
-TABLE_ROWS_FILE_NAME = "tabRows"
+FILE_TYPE = ".sdb"
+TAB_ITEMS_FILE_NAME = "_doc"
+TABLE_ROWS_FILE_NAME = "_doc2"
 
 
 class MainWindow(QMainWindow, MainWindow):
@@ -35,14 +36,18 @@ class MainWindow(QMainWindow, MainWindow):
         self.tab_window = TabWindow(self)
         self.row_window = RowWindow(self)
         self.item_search_window = ItemSearchWindow(self)
-        self.warn_window = WarningWindow(self)
+        self.warn_window = WarningWindow()
         self.fileio = FileIO()
 
         # Menu Actions
-        self.actionNew_Project.triggered.connect(self.new_project)
+        self.actionNew_Project.triggered.connect(
+            lambda: self.new_project("New Project"))
         self.actionLoad_Project.triggered.connect(self.load_project)
         self.actionSave_Project.triggered.connect(self.save_project)
         self.actionSave_As.triggered.connect(self.save_as_project)
+        self.print_file.triggered.connect(lambda: self.print_preview_widget(
+            self.table_list[self.tabWidget.currentIndex()], self.windowTitle(), self.total_cost_label.text()))
+        self.actionQuit.triggered.connect(self.close)
 
         # Button events
         self.btn_add_tab.clicked.connect(self.open_tab_window)
@@ -65,9 +70,9 @@ class MainWindow(QMainWindow, MainWindow):
         for i in self.menu_clickables:
             i.setEnabled(True)
 
-    def new_project(self):
+    def new_project(self, window_title):
         dialog = QFileDialog.getSaveFileName(
-            self, "Create a Project folder", DIR)
+            self, window_title, DIR)
         if dialog[0]:
             self.reset_project()
             path = QtCore.QFileInfo(dialog[0])
@@ -99,7 +104,7 @@ class MainWindow(QMainWindow, MainWindow):
                 self.update_project_table()
                 self.on_tab_changed(0)
             else:
-                self.open_warn_window("Invalid proejct folder.", ['ok'])
+                self.open_warn_window("Invalid project folder.", ['ok'])
 
     def save_project(self):
         lists = [self.tab_items_list, self.tab_table_list]
@@ -109,7 +114,7 @@ class MainWindow(QMainWindow, MainWindow):
                                  file_name, FILE_TYPE, lists[i])
 
     def save_as_project(self):
-        self.new_project()
+        self.new_project("Save as new")
         self.save_project()
 
     def open_tab_window(self):
@@ -155,6 +160,8 @@ class MainWindow(QMainWindow, MainWindow):
 
         window.set_dropbox_current_index(
             window.select_item_dropbox, list(ChainMap(*self.tab_items_list)) if self.tabWidget.currentIndex() == 0 else self.tab_items_list[self.tabWidget.currentIndex()-1].keys())
+
+        window.select_item_dropbox.setCurrentIndex(-1)
 
     def row_window_config(self, window_title, columns_text, image_url, btn_func, other_func=None):
         window = self.row_window
@@ -341,3 +348,83 @@ class MainWindow(QMainWindow, MainWindow):
             self.table_list[i].setFont(font)
         self.label.setFont(font)
         self.total_cost_label.setFont(font)
+
+    def print_widget(self, current_table, title, text):
+        printer = QPrinter(QPrinter.PrinterMode.HighResolution)
+        dialog = QPrintDialog(printer, self)
+
+        if dialog.exec() == QPrintDialog.Accepted:
+            self.print_doc(printer, current_table, title, text)
+
+    def print_preview_widget(self, current_table, title, text):
+        printer = QPrinter(QPrinter.PrinterMode.HighResolution)
+        dialog = QPrintPreviewDialog(printer, self)
+        dialog.paintRequested.connect(
+            lambda: self.print_doc(printer, current_table, title, text))
+        dialog.exec_()
+
+    def print_doc(self, printer, current_table, title, text):
+        document = QtGui.QTextDocument()
+        cursor = QtGui.QTextCursor(document)
+        font = current_table.font()
+        self.insert_line_text(
+            cursor, 0, title, 16, QtCore.Qt.AlignmentFlag.AlignCenter)
+        cursor.movePosition(QtGui.QTextCursor.Down)
+
+        table = cursor.insertTable(
+            current_table.rowCount()+1, current_table.columnCount(), self.table_format(1))
+
+        for id, c in enumerate([current_table.horizontalHeaderItem(i).text() for i in range(current_table.columnCount())]):
+            table.cellAt(0, id).firstCursorPosition().setBlockFormat(
+                self.print_text_align(QtCore.Qt.AlignmentFlag.AlignCenter))
+            cursor.insertText(c, self.char_format(
+                font.family(), font.pointSize()))
+            cursor.movePosition(QtGui.QTextCursor.NextCell)
+
+        for row in range(table.rows()-1):
+            for col in range(table.columns()):
+                table.cellAt(row+1, col).firstCursorPosition().setBlockFormat(
+                    self.print_text_align(QtCore.Qt.AlignmentFlag.AlignCenter))
+                cursor.insertText(
+                    current_table.item(row, col).text(), self.char_format(
+                        font.family(), font.pointSize()))
+                cursor.movePosition(QtGui.QTextCursor.NextCell)
+
+        cursor.movePosition(QtGui.QTextCursor.Down)
+        self.insert_line_text(
+            cursor, 0, f"Sub-Total : Tk. {text} /-", font.pointSize() * 1.2, QtCore.Qt.AlignmentFlag.AlignRight)
+
+        document.print_(printer)
+
+    def insert_line_text(self, cursor, border_size, text, font_size, align):
+        table = cursor.insertTable(
+            1, 1, self.table_format(border_size))
+        table.cellAt(0, 0).firstCursorPosition().setBlockFormat(
+            self.print_text_align(align))
+        cursor.insertText(text,
+                          self.char_format("Roboto", font_size))
+
+    def table_format(self, border_size):
+        tableFormat = QtGui.QTextTableFormat()
+        tableFormat.setBorder(border_size)
+        tableFormat.setBorderStyle(3)
+        tableFormat.setCellSpacing(0)
+        tableFormat.setTopMargin(0)
+        tableFormat.setCellPadding(4)
+        tableFormat.setWidth(QtGui.QTextLength(
+            QtGui.QTextLength.PercentageLength, 100))
+        tableFormat.setHeight(QtGui.QTextLength(
+            QtGui.QTextLength.PercentageLength, 100))
+        return tableFormat
+
+    def char_format(self, font_family, point_size):
+        charFormat = QtGui.QTextCharFormat()
+        charFormat.setFontFamily(font_family)
+        charFormat.setFontPointSize(point_size)
+
+        return charFormat
+
+    def print_text_align(self, align):
+        alignment = QtGui.QTextBlockFormat()
+        alignment.setAlignment(align)
+        return alignment

@@ -1,5 +1,10 @@
 import os
 import json
+import base64
+
+
+ENCODE_FORMAT = "utf-8"
+BYTE_OBJECT_VERSION = 85
 
 
 class FileIO:
@@ -8,13 +13,12 @@ class FileIO:
 
     def save(self, path, file_name, file_type, data):
         with open(f"{path}/{file_name}{file_type}", "w", encoding="utf-8") as file:
-            _json = json.dumps(data)
-            file.write(_json)
+            file.write(self.data_to_byte_string(data))
             file.close()
 
     def load(self, path, file_name, file_type):
         with open(f"{path}/{file_name}{file_type}", "r", encoding="utf-8") as file:
-            _json = json.loads(file.read())
+            _json = json.loads(self.byte_string_to_data(file.read()))
             file.close()
         return _json
 
@@ -29,9 +33,20 @@ class FileIO:
     def create_file(self, file_name, path, file_type):
         file = open(f"{path}/{file_name}{file_type}",
                     "w", encoding="utf-8")
-        file.write("[]")
+        file.write(self.data_to_byte_string([]))
         file.close()
 
     def get_project_files(self, path):
         if os.path.isdir(path):
             return os.listdir(path)
+
+    def data_to_byte_string(self, json_data):
+        _json = json.dumps(json_data)
+        j_bytes = _json.encode("utf-8")
+        base_encode = base64.a85encode(j_bytes)
+        return base_encode.decode("utf-8")
+
+    def byte_string_to_data(self, byte_string):
+        j_bytes = byte_string.encode("utf-8")
+        base_decode = base64.a85decode(j_bytes)
+        return base_decode

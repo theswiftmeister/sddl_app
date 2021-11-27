@@ -12,6 +12,9 @@ class ItemSearchWindow(QDialog, item_search_dialog):
         for i in range(self.tableWidget.columnCount()):
             self.tableWidget.horizontalHeader().setSectionResizeMode(i, QHeaderView.Stretch)
 
+        self.btn_print.clicked.connect(
+            lambda: mainwindow.print_preview_widget(self.tableWidget, f"{mainwindow.windowTitle()}-{self.windowTitle()}", self.label_total_cost.text()))
+
     def closeEvent(self, e) -> None:
         self.tableWidget.setRowCount(0)
         return super().closeEvent(e)

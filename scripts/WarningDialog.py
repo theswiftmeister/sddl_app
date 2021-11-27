@@ -4,7 +4,7 @@ from guipy.warning_dialog import warning_dialog
 
 
 class WarningWindow(QDialog, warning_dialog):
-    def __init__(self, mainwindow) -> None:
+    def __init__(self) -> None:
         super().__init__(None, QtCore.Qt.WindowTitleHint | QtCore.Qt.WindowCloseButtonHint)
         self.setupUi(self)
         self.setWindowModality(QtCore.Qt.ApplicationModal)
@@ -21,3 +21,5 @@ class WarningWindow(QDialog, warning_dialog):
         for i in range(len(btns)):
             if btns[i] == 'ok':
                 self.buttonBox.addButton(QDialogButtonBox.StandardButton.Ok)
+            if btns[i] == 'close':
+                self.buttonBox.addButton(QDialogButtonBox.StandardButton.Close)

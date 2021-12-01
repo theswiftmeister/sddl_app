@@ -1,6 +1,7 @@
 import json
 import base64
 import os
+from collections import ChainMap
 
 
 def encode(data):
@@ -19,4 +20,23 @@ def decode():
         print(_json)
 
 
-print(os.getenv("USER_NAME"))
+# l = [
+#     {'name': '2', 'rows': [['27/11/2021', 'a', 'q', '3', '2', '6.00']]},
+#     {'name': '1', 'rows': [['27/11/2021', '3', '3', '3', '3', '9.00']]},
+#     {'name': '3', 'rows': []},
+#     {'name': '4', 'rows': []}]
+
+
+# print([i["name"] for i in l])
+
+l = [{'name': '1', 'unit': {'a': '2', 'a2': '2', 'a5': '2', 'a6': '2'},
+     'rows': [["a", 1, 2, 3, 4, 5], ["a", 1, 2, 3, 4, 5], ["a", 1, 2, 3, 4, 5]]}, {'name': '1', 'unit': {'a': '2', 'a2': '2', 'a5': '2', 'a6': '2'},
+                                                                                   'rows': [["a", 1, 2, 3, 4, 5], ["a", 1, 2, 3, 4, 5], ["a", 1, 2, 3, 4, 5]]}, {'name': '1', 'unit': {'a': '2', 'a2': '2', 'a5': '2', 'a6': '2'},
+                                                                                                                                                                 'rows': [["a", 1, 2, 3, 4, 5], ["a", 1, 2, 3, 4, 5], ["a", 1, 2, 3, 4, 5]]}]
+
+# for i in l:
+#     for r in i["rows"]:
+#         print(r, end="\n")
+
+a = [r for r in [i["rows"] for i in l]]
+print(a)

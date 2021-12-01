@@ -27,7 +27,7 @@ class warning_dialog(object):
         WarningDialogBox.setMaximumSize(QtCore.QSize(400, 110))
         font = QtGui.QFont()
         font.setFamily("Roboto")
-        font.setPointSize(12)
+        font.setPointSize(10)
         WarningDialogBox.setFont(font)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("./images/x.png"),
@@ -39,8 +39,8 @@ class warning_dialog(object):
         self.verticalLayout.setObjectName("verticalLayout")
         self.text_frame = QtWidgets.QFrame(WarningDialogBox)
         font = QtGui.QFont()
-        font.setPointSize(12)
-        font.setWeight(70)
+        font.setPointSize(11)
+        font.setWeight(40)
         self.text_frame.setFont(font)
         self.text_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.text_frame.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -63,10 +63,10 @@ class warning_dialog(object):
         self.verticalLayout.addWidget(self.buttonBox)
 
         self.retranslateUi(WarningDialogBox)
-        self.buttonBox.accepted.connect(
-            WarningDialogBox.accept)  # type: ignore
-        self.buttonBox.rejected.connect(
-            WarningDialogBox.reject)  # type: ignore
+        # self.buttonBox.accepted.connect(
+        #     WarningDialogBox.accept)  # type: ignore
+        # self.buttonBox.rejected.connect(
+        #     WarningDialogBox.reject)  # type: ignore
         QtCore.QMetaObject.connectSlotsByName(WarningDialogBox)
 
     def retranslateUi(self, WarningDialogBox):

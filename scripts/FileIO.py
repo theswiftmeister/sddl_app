@@ -11,13 +11,13 @@ class FileIO:
     def __init__(self) -> None:
         pass
 
-    def save(self, path, file_name, file_type, data):
-        with open(f"{path}/{file_name}{file_type}", "w", encoding="utf-8") as file:
+    def save(self, file_name, data):
+        with open(f"{file_name}", "w", encoding="utf-8") as file:
             file.write(self.data_to_byte_string(data))
             file.close()
 
-    def load(self, path, file_name, file_type):
-        with open(f"{path}/{file_name}{file_type}", "r", encoding="utf-8") as file:
+    def load(self, path):
+        with open(f"{path}", "r", encoding="utf-8") as file:
             _json = json.loads(self.byte_string_to_data(file.read()))
             file.close()
         return _json

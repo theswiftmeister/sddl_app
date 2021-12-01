@@ -9,17 +9,23 @@ class WarningWindow(QDialog, warning_dialog):
         self.setupUi(self)
         self.setWindowModality(QtCore.Qt.ApplicationModal)
 
-        self.buttonBox.accepted.connect(self.close)
-
     def closeEvent(self, a0) -> None:
         self.warning_text_label.setText("")
         self.buttonBox.clear()
+
         return super().closeEvent(a0)
 
     def set_window(self, str, btns):
         self.warning_text_label.setText(str)
+        font = self.warning_text_label.font()
+        self.warning_text_label.setFont(font)
         for i in range(len(btns)):
             if btns[i] == 'ok':
-                self.buttonBox.addButton(QDialogButtonBox.StandardButton.Ok)
-            if btns[i] == 'close':
-                self.buttonBox.addButton(QDialogButtonBox.StandardButton.Close)
+                self.buttonBox.addButton(
+                    "OK", QDialogButtonBox.ButtonRole.AcceptRole)
+            if btns[i] == 'yes':
+                self.buttonBox.addButton(
+                    "YES", QDialogButtonBox.ButtonRole.AcceptRole)
+            if btns[i] == 'no':
+                self.buttonBox.addButton(
+                    "NO", QDialogButtonBox.ButtonRole.RejectRole)

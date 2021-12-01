@@ -44,16 +44,8 @@ class item_search_dialog(object):
         self.tableWidget.setEditTriggers(
             QtWidgets.QAbstractItemView.NoEditTriggers)
         self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(4)
+        self.tableWidget.setColumnCount(0)
         self.tableWidget.setRowCount(0)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(0, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(1, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(2, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(3, item)
         self.tableWidget.horizontalHeader().setDefaultSectionSize(70)
         self.tableWidget.verticalHeader().setVisible(False)
         self.tableWidget.verticalHeader().setDefaultSectionSize(0)
@@ -130,13 +122,5 @@ class item_search_dialog(object):
         _translate = QtCore.QCoreApplication.translate
         item_search_dialog.setWindowTitle(
             _translate("item_search_dialog", "#Itemname"))
-        item = self.tableWidget.horizontalHeaderItem(0)
-        item.setText(_translate("item_search_dialog", "Date"))
-        item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("item_search_dialog", "Quantity"))
-        item = self.tableWidget.horizontalHeaderItem(2)
-        item.setText(_translate("item_search_dialog", "Rate"))
-        item = self.tableWidget.horizontalHeaderItem(3)
-        item.setText(_translate("item_search_dialog", "Total"))
         self.label.setText(_translate(
             "item_search_dialog", "Sub-Total Cost : "))

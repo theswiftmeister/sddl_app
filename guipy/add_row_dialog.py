@@ -313,12 +313,6 @@ class add_row_dialog(object):
         font.setWeight(75)
         self.dateEdit.setFont(font)
         self.dateEdit.setObjectName("dateEdit")
-
-        day = date.today().day
-        month = date.today().month
-        year = date.today().year
-
-        self.dateEdit.setDate(QtCore.QDate(year, month, day))
         self.dateEdit.setDisplayFormat("d/M/yyyy")
         self.horizontalLayout_7.addWidget(self.dateEdit)
         self.horizontalLayout_16.addLayout(self.horizontalLayout_7)

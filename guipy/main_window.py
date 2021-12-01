@@ -275,6 +275,33 @@ class MainWindow(object):
         spacerItem3 = QtWidgets.QSpacerItem(
             270, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem3)
+        self.btn_view_whole_project = QtWidgets.QPushButton(self.frame)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.btn_view_whole_project.sizePolicy().hasHeightForWidth())
+        self.btn_view_whole_project.setSizePolicy(sizePolicy)
+        self.btn_view_whole_project.setMinimumSize(QtCore.QSize(40, 40))
+        self.btn_view_whole_project.setMaximumSize(QtCore.QSize(40, 40))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_view_whole_project.setFont(font)
+        self.btn_view_whole_project.setText("")
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap("./images/view_all.png"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btn_view_whole_project.setIcon(icon5)
+        self.btn_view_whole_project.setIconSize(QtCore.QSize(36, 36))
+        self.btn_view_whole_project.setFlat(True)
+        self.btn_view_whole_project.setObjectName("btn_view_whole_project")
+        self.horizontalLayout.addWidget(self.btn_view_whole_project)
+        spacerItem4 = QtWidgets.QSpacerItem(
+            25, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem4)
         self.verticalLayout.addWidget(self.frame)
         self.frame_2 = QtWidgets.QFrame(self.centralwidget)
         self.frame_2.setEnabled(True)
@@ -350,13 +377,13 @@ class MainWindow(object):
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 894, 26))
         font = QtGui.QFont()
-        font.setPointSize(11)
+        font.setPointSize(10)
         self.menubar.setFont(font)
         self.menubar.setStyleSheet("")
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPointSize(10)
         self.menuFile.setFont(font)
         self.menuFile.setObjectName("menuFile")
         MainWindow.setMenuBar(self.menubar)
@@ -373,7 +400,7 @@ class MainWindow(object):
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionNew_Project.setIcon(icon7)
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPointSize(10)
         font.setBold(False)
         font.setWeight(50)
         self.actionNew_Project.setFont(font)
@@ -386,7 +413,7 @@ class MainWindow(object):
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionLoad_Project.setIcon(icon8)
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPointSize(10)
         self.actionLoad_Project.setFont(font)
         self.actionLoad_Project.setShortcutContext(
             QtCore.Qt.ApplicationShortcut)
@@ -397,7 +424,7 @@ class MainWindow(object):
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionSave_Project.setIcon(icon9)
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPointSize(10)
         self.actionSave_Project.setFont(font)
         self.actionSave_Project.setShortcutContext(
             QtCore.Qt.ApplicationShortcut)
@@ -408,7 +435,7 @@ class MainWindow(object):
                          QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionSave_As.setIcon(icon10)
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPointSize(10)
         self.actionSave_As.setFont(font)
         self.actionSave_As.setShortcutContext(QtCore.Qt.ApplicationShortcut)
         self.actionSave_As.setObjectName("actionSave_As")
@@ -418,7 +445,7 @@ class MainWindow(object):
                          QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.print_file.setIcon(icon11)
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPointSize(10)
         self.print_file.setFont(font)
         self.print_file.setShortcutContext(QtCore.Qt.ApplicationShortcut)
         self.print_file.setObjectName("print_file")
@@ -428,23 +455,48 @@ class MainWindow(object):
                          QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionQuit.setIcon(icon12)
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPointSize(10)
         self.actionQuit.setFont(font)
         self.actionQuit.setObjectName("actionQuit")
+        self.menu_undo = QtWidgets.QAction(MainWindow)
+        icon14 = QtGui.QIcon()
+        icon14.addPixmap(QtGui.QPixmap("./images/print.png"),
+                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.menu_undo.setIcon(icon14)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.menu_undo.setFont(font)
+        self.menu_undo.setShortcutContext(QtCore.Qt.ApplicationShortcut)
+        self.menu_undo.setObjectName("menu_undo")
+        self.menu_setting = QtWidgets.QAction(MainWindow)
+        icon15 = QtGui.QIcon()
+        icon15.addPixmap(QtGui.QPixmap("./images/print.png"),
+                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.menu_setting.setIcon(icon15)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.menu_setting.setFont(font)
+        self.menu_setting.setShortcutContext(QtCore.Qt.ApplicationShortcut)
+        self.menu_setting.setObjectName("menu_setting")
         self.menuFile.addAction(self.actionNew_Project)
         self.menuFile.addAction(self.actionLoad_Project)
         self.menuFile.addAction(self.actionSave_Project)
         self.menuFile.addAction(self.actionSave_As)
+        self.menuFile.addSeparator()
+        # self.menuFile.addAction(self.menu_setting)
+        self.menuFile.addAction(self.menu_undo)
         self.menuFile.addAction(self.print_file)
         self.menuFile.addSeparator()
+
         self.menuFile.addAction(self.actionQuit)
+
         self.menubar.addAction(self.menuFile.menuAction())
 
         self.retranslateUi(MainWindow)
 
         self.dropdown.setCurrentIndex(-1)
-        self.menu_clickables = [self.actionSave_As, self.actionSave_Project, self.btn_add_row,
-                                self.btn_add_tab, self.btn_edit_row, self.btn_remove_row, self.btn_remove_tab, self.btn_search_item, self.fontComboBox, self.spinBox, self.print_file]
+        self.menu_clickables = [self.actionSave_As, self.actionSave_Project, self.btn_add_row, self.btn_edit_row,
+                                self.btn_add_tab, self.btn_remove_tab, self.btn_remove_row, self.menu_undo, self.btn_search_item, self.fontComboBox, self.spinBox, self.print_file, self.btn_view_whole_project]
         for i in self.menu_clickables:
             i.setEnabled(False)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -453,7 +505,7 @@ class MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "SDDL DB"))
         self.label.setText(_translate(
-            "MainWindow", "Project total cost :  : "))
+            "MainWindow", "-:-"))
         self.total_cost_label.setText(_translate("MainWindow", "0"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.actionNew_Project.setText(_translate("MainWindow", "New Project"))
@@ -484,3 +536,11 @@ class MainWindow(object):
         self.actionQuit.setStatusTip(
             _translate("MainWindow", "Closes the app"))
         self.actionQuit.setShortcut(_translate("MainWindow", "Ctrl+Alt+Q"))
+        self.menu_undo.setText(_translate("MainWindow", "Undo"))
+        self.menu_undo.setStatusTip(
+            _translate("MainWindow", "Undo Previous action"))
+        self.menu_undo.setShortcut(_translate("MainWindow", "Ctrl+Z"))
+        self.menu_setting.setText(_translate("MainWindow", "Settings"))
+        self.menu_setting.setStatusTip(
+            _translate("MainWindow", "Open Settings"))
+        self.menu_setting.setShortcut(_translate("MainWindow", "Ctrl+P"))

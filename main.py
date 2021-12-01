@@ -13,11 +13,12 @@ if __name__ == "__main__":
         sys.exit(app.exec_())
     else:
         window = WarningWindow()
-        window.set_window("Invalid user...", ["close"])
+        window.set_window("User does not have permission.", ["ok"])
         window.show()
         sys.exit(app.exec_())
 
 # TO DO
 """
+
 
 """

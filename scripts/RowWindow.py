@@ -1,4 +1,5 @@
 
+from datetime import date
 from PyQt5 import QtCore, QtGui
 from PyQt5.QtWidgets import QComboBox, QDialog
 from guipy.add_row_dialog import add_row_dialog
@@ -13,25 +14,71 @@ class RowWindow(QDialog, add_row_dialog):
         self.input_item_quantity.editingFinished.connect(self.calculate)
         self.input_item_rate.editingFinished.connect(self.calculate)
 
-        self.btn_reset.clicked.connect(lambda: self.set_column_field_texts(
-            ["", "", "", "", ""]))
-
-        self.select_tab_dropbox.textActivated.connect(lambda e: self.set_dropbox_current_index(
-            self.select_item_dropbox, [k for k, v in mainwindow.get_name_value_dict()[self.get_dropbox_current_index(self.select_tab_dropbox)].items()]))
+        self.btn_reset.clicked.connect(self.reset)
         self.select_item_dropbox.textActivated.connect(
-            lambda e: self.set_name_value_fields(name=e, tab_index=self.get_dropbox_current_index(self.select_tab_dropbox), list=mainwindow.get_name_value_dict()))
+            lambda e: self.set_name_unit_fields(e, mainwindow.get_unit_dict()))
 
     def closeEvent(self, e) -> None:
         return super().closeEvent(e)
 
-    def get_dropbox_current_index(self, dropbox: QComboBox):
-        return dropbox.currentIndex()
+    def reset(self):
+        """(function)
+        Resets every editable widgets in row window."""
+        self.set_input_field_values(["", "", "", "", "0"])
+        self.dateEdit.setDate(self.todays_date())
 
-    def set_dropbox_current_index(self, dropbox: QComboBox, list: list):
-        dropbox.clear()
-        dropbox.addItems(list)
+    def set_input_field_values(self, list):
+        """(function)
+        Sets values for inputs fields in row dialog window.
+
+        Params : 
+                list : name,quantity,unit,rate,cost"""
+        input_fields = [self.input_item_name, self.input_unit, self.input_item_quantity,
+                        self.input_item_rate,  self.total_cost_label]
+        for index, fields in enumerate(input_fields):
+            fields.setText(list[index])
+
+    def get_input_field_values(self):
+        """(function)
+        Gets values from inputs fields in row dialog window."""
+        input_fields = [self.dateEdit, self.input_item_name, self.input_unit,  self.input_item_quantity,
+                        self.input_item_rate, self.total_cost_label]
+        return [value.text() for value in input_fields]
+
+    def get_input_field(self):
+        """(function)
+        Gets values from inputs fields in row dialog window."""
+        input_fields = [self.input_item_name, self.input_unit,  self.input_item_quantity,
+                        self.input_item_rate]
+        return input_fields
+
+    def todays_date(self) -> QtCore.QDate:
+        """(method)
+        Returns : today's date."""
+        day = date.today().day
+        month = date.today().month
+        year = date.today().year
+        return QtCore.QDate(year, month, day)
+
+    def set_combo_box(self, dropbox: QComboBox, index: int, is_enabled: bool):
+        """(function)
+
+        Sets combo box index and usability.
+        """
+        if dropbox.count() > 0:
+            dropbox.setCurrentIndex(index)
+            dropbox.setEnabled(is_enabled)
+
+    def add_dropbox_items(self, dropbox: QComboBox, items: list):
+        """Clears dropbox and adds list to items."""
+        if dropbox.count() > 0:
+            dropbox.clear()
+        dropbox.addItems(items)
+        dropbox.setCurrentIndex(-1)
 
     def calculate(self):
+        """(method)
+        Gets text from quantity and rate, converts it float and sets total cost text."""
         try:
             quantity = int(0 if not self.input_item_quantity.text()
                            else self.input_item_quantity.text())
@@ -42,37 +89,27 @@ class RowWindow(QDialog, add_row_dialog):
         except:
             pass
 
-    def column_texts(self):
-        columns = [self.dateEdit, self.input_item_name, self.input_unit,
-                   self.input_item_quantity, self.input_item_rate, self.total_cost_label]
-        return [i.text() for i in columns][:]
-
-    def set_column_field_texts(self, list):
-        columns = [self.input_item_name, self.input_unit,
-                   self.input_item_quantity, self.input_item_rate, self.total_cost_label]
-        for i in range(len(columns)):
-            columns[i].setText(list[i])
-
-    def get_column_field_texts(self):
-        columns = [self.input_item_name, self.input_unit,
-                   self.input_item_quantity, self.input_item_rate]
-        return columns
-
-    def set_name_value_fields(self, name, tab_index, list):
-        self.input_item_name.setText(name)
-        self.input_unit.setText(
-            list[tab_index][name])
-
-    def get_name_value_dict(self):
-        name = self.input_item_name.text()
-        value = self.input_unit.text()
-        return name, value
-
-    def set_dropbox(self, dropbox: QComboBox, isEnabled: bool, index: int):
-        dropbox.setCurrentIndex(index)
-        dropbox.setEnabled(isEnabled)
+    def set_name_unit_fields(self, current_key: str, dict: dict):
+        """(method)
+        Set name and unit input, if present in dict.
+        Params:
+                current_key : str -> key to search.
+                dict: dict -> dictionary to search from.
+        """
+        try:
+            for key, value in dict.items():
+                if key == current_key:
+                    self.input_item_name.setText(key)
+                    self.input_unit.setText(value)
+        except:
+            pass
 
     def set_window_icon(self, path):
+        """(method)
+        Set window ui icon.
+        Params:
+                path :str -> Path of image.
+        """
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(path),
                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
